@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jiaru Xu — Portfolio</title>
+    <!-- 引入 Tailwind CSS 进行高级响应式布局 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 配置自定义 Tailwind 颜色主题，与粉色光标 (#fc6fa7) 完美匹配
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pink-theme': '#fc6fa7',
+                        'pink-theme-hover': '#ff8cb8',
+                        'pink-light': '#fff1f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 引入 Google Fonts - Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=1,400;1,600&display=swap" rel="stylesheet">
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #18181b; /* 优雅的深灰黑 */
+            overflow-x: hidden;
+        }
+
+        /* 隐藏系统默认鼠标，使用自定义粉色圆圈光标 */
+        @media (pointer: fine) {
+            body, a, button, select, input, [role="button"], .portfolio-item, #portfolio-modal, #portfolio-modal * {
+                cursor: none !important;
+            }
+        }
+
+        /* 隐藏滚动条但保留滚动功能 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e4e4e7;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fc6fa7;
+        }
+
+        /* 风琴式文件夹挤压特效 */
+        @media (min-width: 768px) {
+            .portfolio-container {
+                display: flex;
+                width: 100%;
+                gap: 1.5rem;
+            }
+            .portfolio-item {
+                flex: 0.8; /* 默认缩小状态 */
+                transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .portfolio-container:hover .portfolio-item {
+                flex: 0.8;
+                opacity: 0.5;
+                filter: grayscale(15%) blur(0.5px);
+            }
+            .portfolio-container .portfolio-item:hover {
+                flex: 1;
+                opacity: 1;
+                filter: grayscale(0%) blur(0px);
+            }
+
+            .career-title-hover {
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                transform-origin: left center;
+            }
+            .group\/career:hover .career-title-hover {
+                transform: scale(1.08);
+                color: #fc6fa7;
+                text-shadow: 0 0 16px rgba(252, 111, 167, 0.75), 0 0 32px rgba(252, 111, 167, 0.45);
+            }
+            .career-dot-hover {
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .group\/career:hover .career-dot-hover {
+                transform: scale(1.35);
+                border-color: #fc6fa7;
+                box-shadow: 0 0 20px #fc6fa7, 0 0 35px rgba(252, 111, 167, 0.55);
+                background-color: #fff1f6;
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-pink-light selection:text-pink-theme relative">
+
+    <!-- 极简高质感的纯物理粉色圆圈 (支持平滑缓动) -->
+    <div id="custom-cursor" class="fixed pointer-events-none z-[100000] w-7 h-7 -ml-3.5 -mt-3.5 border-2 border-pink-theme rounded-full transition-transform duration-75 ease-out opacity-0 hidden md:block shadow-lg shadow-pink-theme/20"></div>
+
+    <!-- 首屏：背景，磨砂玻璃质感，文字互动，点击触发导航 -->
+    <section id="hero" class="relative min-h-screen w-full flex flex-col items-center justify-center px-6 z-10 bg-cover bg-center" style="background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEXU5BqWKtlwab0_4JVMsOT2uPlxldudAACHCsAAm1OwFaHKnlx0vrYtj0E.png');">
+        
+        <!-- 首屏核心：超强磨砂玻璃层 -->
+        <div class="absolute inset-0 bg-white/25 backdrop-blur-2xl pointer-events-none"></div>
+
+        <!-- 核心交互区 -->
+        <div class="text-center w-full max-w-5xl z-10 flex flex-col items-center justify-center">
+            
+            <div id="landing-container" class="relative w-full max-w-3xl aspect-[16/9] md:aspect-[16/9] rounded-2xl overflow-hidden cursor-pointer shadow-2xl shadow-zinc-200/50 transition-all duration-700 ease-out hover:scale-[1.05] group">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-102" style="background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEXU5tqWKvWeEcZodyIftKuapZjqNji9gACJysAAm1OwFZquUbVAfOZlD0E.png');"></div>
+                <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            </div>
+            
+            <div id="click-hint" class="mt-8 transition-all duration-500 text-center select-none animate-bounce">
+                <span class="text-[10px] tracking-[0.3em] text-zinc-400 font-semibold uppercase block mb-2">Click text to explore</span>
+                <i class="fa-solid fa-chevron-down text-pink-theme text-xs"></i>
+            </div>
+        </div>
+
+        <!-- 点击后展开的居中极简导航 -->
+        <div id="nav-container" class="absolute inset-0 flex flex-col items-center justify-center space-y-8 md:space-y-12 transition-all duration-1000 transform translate-y-10 z-20 pointer-events-none opacity-0">
+            <h2 class="text-[10px] tracking-[0.4em] uppercase text-white/60 font-semibold mb-2">NAVIGATION</h2>
+            <nav class="flex flex-col items-center space-y-6 md:space-y-8 pointer-events-auto">
+                <a href="#about" class="nav-item group flex items-baseline justify-center space-x-6 text-2xl md:text-4xl font-thin tracking-[0.2em] text-white hover:text-pink-theme transition-all duration-500">
+                    <span class="font-light">ABOUT ME</span>
+                    <span class="text-xs font-normal tracking-normal text-white/50 group-hover:text-pink-theme transition-colors duration-500">关于我</span>
+                </a>
+                <a href="#career" class="nav-item group flex items-baseline justify-center space-x-6 text-2xl md:text-4xl font-thin tracking-[0.2em] text-white hover:text-pink-theme transition-all duration-500">
+                    <span class="font-light">CAREER</span>
+                    <span class="text-xs font-normal tracking-normal text-white/50 group-hover:text-pink-theme transition-colors duration-500">履历概览</span>
+                </a>
+                <a href="#portfolio" class="nav-item group flex items-baseline justify-center space-x-6 text-2xl md:text-4xl font-thin tracking-[0.2em] text-white hover:text-pink-theme transition-all duration-500">
+                    <span class="font-light">PORTFOLIO</span>
+                    <span class="text-xs font-normal tracking-normal text-white/50 group-hover:text-pink-theme transition-colors duration-500">项目展示</span>
+                </a>
+                <a href="#contact" class="nav-item group flex items-baseline justify-center space-x-6 text-2xl md:text-4xl font-thin tracking-[0.2em] text-white hover:text-pink-theme transition-all duration-500">
+                    <span class="font-light">CONTACT</span>
+                    <span class="text-xs font-normal tracking-normal text-white/50 group-hover:text-pink-theme transition-colors duration-500">联系我</span>
+                </a>
+            </nav>
+        </div>
+    </section>
+
+    <!-- 滚动时自动浮现的极简导航条 -->
+    <header id="sticky-header" class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100 py-4 px-6 md:px-12 transform -translate-y-full transition-transform duration-500">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#hero" class="text-xs uppercase tracking-[0.3em] font-bold text-zinc-800 hover:text-pink-theme transition-colors duration-300">
+                JIARU.XU
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-xs tracking-wider text-zinc-500 hover:text-pink-theme transition-colors duration-300 uppercase">About</a>
+                <a href="#career" class="text-xs tracking-wider text-zinc-500 hover:text-pink-theme transition-colors duration-300 uppercase">Career</a>
+                <a href="#portfolio" class="text-xs tracking-wider text-zinc-500 hover:text-pink-theme transition-colors duration-300 uppercase">Portfolio</a>
+                <a href="#contact" class="text-xs tracking-wider text-zinc-500 hover:text-pink-theme transition-colors duration-300 uppercase">Contact</a>
+            </nav>
+            <a href="#contact" class="text-xs px-4 py-1.5 rounded-full border border-zinc-200 text-zinc-600 hover:border-pink-theme hover:text-pink-theme transition-all duration-300">
+                Let's Talk
+            </a>
+        </div>
+    </header>
+
+    <!-- 第一板块：About Me (关于我) -->
+    <section id="about" class="relative py-28 md:py-36 px-6 md:px-12 max-w-7xl mx-auto border-t border-zinc-100 bg-white">
+        
+        <div class="relative mb-16 select-none">
+            <img src="https://img.cdn1.vip/i/6a5a0932f2e5e_1784285490.webp" class="absolute -left-12 md:-left-20 -top-8 md:-top-12 w-[330px] md:w-[570px] max-w-none h-auto object-contain pointer-events-none z-0 opacity-90" alt="Title Ornament">
+            
+            <div class="relative z-10">
+                <span class="text-pink-theme text-xs font-bold tracking-widest uppercase">01 / Profile</span>
+                <h2 class="text-3xl md:text-4xl font-extralight tracking-widest text-zinc-900 mt-2">ABOUT ME <span class="text-zinc-400 font-light text-base block md:inline md:ml-2">关于我</span></h2>
+            </div>
+        </div>
+
+        <div class="space-y-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+                
+                <div class="md:col-span-8 flex flex-col justify-between py-0">
+                    
+                    <div class="border-l-4 border-pink-theme pl-6 space-y-1.5 self-start">
+                        <h3 class="text-4xl font-light text-zinc-900 tracking-wider">徐嘉茹</h3>
+                        <p class="text-sm text-pink-theme tracking-wide font-medium">年龄：27 岁</p>
+                    </div>
+
+                    <div class="space-y-6 text-zinc-600 self-start mt-8 md:mt-0">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-pink-light flex items-center justify-center text-pink-theme shrink-0 mt-0.5 border border-pink-theme/10">
+                                <i class="fa-solid fa-graduation-cap text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-base font-semibold text-zinc-850">教育：绵阳师范学院</p>
+                                <p class="text-xs text-zinc-500 mt-1">德语专业 (全日制本科) | 2018.09 - 2022.07</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-pink-light flex items-center justify-center text-pink-theme shrink-0 mt-0.5 border border-pink-theme/10">
+                                <i class="fa-solid fa-address-book text-sm"></i>
+                            </div>
+                            <div class="space-y-1.5">
+                                <p class="text-base text-zinc-850"><span class="font-semibold">微信/电话：</span>139-8295-8882</p>
+                                <p class="text-base text-zinc-850"><span class="font-semibold">电子邮箱：</span>1015079847@qq.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-4 flex justify-end items-start py-0">
+                    <div class="relative w-full max-w-[260px] group cursor-pointer transition-all duration-500 hover:scale-115 z-10 rounded-2xl shadow-xl shadow-pink-theme/20 hover:shadow-2xl hover:shadow-pink-theme/35">
+                        <img src="https://img.cdn1.vip/i/6a5a2db20f739_1784294834.gif" 
+                             alt="徐嘉茹" 
+                             class="w-full h-auto rounded-2xl transition-all duration-500 ease-in-out group-hover:opacity-0 block" />
+                        <img src="https://img.cdn1.vip/i/6a5a2c4e0e82c_1784294478.gif" 
+                             alt="徐嘉茹 动态" 
+                             class="absolute inset-0 w-full h-auto rounded-2xl opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100 block" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-zinc-50/50 border border-zinc-100 rounded-2xl p-8 space-y-8 shadow-sm">
+                <h4 class="text-xs tracking-widest uppercase text-zinc-400 font-bold flex items-center">
+                    <span class="w-1.5 h-1.5 bg-pink-theme rounded-full mr-2 animate-pulse"></span> Skill Matrix / 技能矩阵
+                </h4>
+
+                <div class="space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-zinc-100 pb-5">
+                        <p class="text-xs text-zinc-400 tracking-wider font-semibold uppercase min-w-[120px]">语言证书</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-2 bg-white border border-pink-theme/30 text-xs text-zinc-900 rounded-lg flex items-center shadow-3xs">
+                                <i class="fa-solid fa-sparkles text-pink-theme mr-2.5 text-[10px]"></i>德语专业四级 (TEM-4)
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-pink-theme/30 text-xs text-zinc-900 rounded-lg flex items-center shadow-3xs">
+                                <i class="fa-solid fa-sparkles text-pink-theme mr-2.5 text-[10px]"></i>英语六级 (CET-6)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-zinc-100 pb-5">
+                        <p class="text-xs text-zinc-400 tracking-wider font-semibold uppercase min-w-[120px]">软件技能</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-palette text-pink-theme mr-2.5 text-[10px]"></i>PS (Photoshop)
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-pen-nib text-pink-theme mr-2.5 text-[10px]"></i>AI (Adobe Illustrator)
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-video text-pink-theme mr-2.5 text-[10px]"></i>剪映 (CapCut)
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-cube text-pink-theme mr-2.5 text-[10px]"></i>Blender
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row md:items-center gap-4">
+                        <p class="text-xs text-zinc-400 tracking-wider font-semibold uppercase min-w-[120px]">运营与数据分析</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-chart-line text-pink-theme mr-2.5 text-[10px]"></i>Ahrefs
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-chart-pie text-pink-theme mr-2.5 text-[10px]"></i>SEMrush
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-magnifying-glass text-pink-theme mr-2.5 text-[10px]"></i>Google Search Console
+                            </span>
+                            <span class="px-3 py-2 bg-white border border-zinc-150 text-xs text-zinc-700 rounded-lg hover:border-pink-theme hover:text-pink-theme transition-colors duration-300 flex items-center shadow-3xs">
+                                <i class="fa-solid fa-bullseye text-pink-theme mr-2.5 text-[10px]"></i>聚光投流 (小红书)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 第二板块：Career Overview (履历概览) -->
+    <section id="career" class="relative py-28 md:py-36 px-6 md:px-12 max-w-7xl mx-auto border-t border-zinc-100 bg-white">
+        <div class="relative mb-16 select-none">
+            <img src="https://img.cdn1.vip/i/6a5a0932f2e5e_1784285490.webp" class="absolute -left-12 md:-left-20 -top-8 md:-top-12 w-[330px] md:w-[570px] max-w-none h-auto object-contain pointer-events-none z-0 opacity-90" alt="Title Ornament">
+            
+            <div class="relative z-10">
+                <span class="text-pink-theme text-xs font-bold tracking-widest uppercase">02 / Journey</span>
+                <h2 class="text-3xl md:text-4xl font-extralight tracking-widest text-zinc-900 mt-2">CAREER OVERVIEW <span class="text-zinc-400 font-light text-base block md:inline md:ml-2">履历概览</span></h2>
+            </div>
+        </div>
+
+        <div class="relative border-l border-zinc-100 pl-8 md:pl-12 space-y-12 max-w-4xl mx-auto">
+            
+            <!-- 01 海外运营 -->
+            <div class="relative group/career">
+                <div class="career-dot-hover absolute -left-[41px] md:-left-[57px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-pink-theme flex items-center justify-center">
+                    <div class="w-1.5 h-1.5 bg-pink-theme rounded-full"></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="career-title-hover text-lg md:text-xl font-semibold text-zinc-900 tracking-wide cursor-pointer inline-block">海外运营 <span class="text-xs font-normal text-zinc-500 font-mono">Overseas Operations Specialist</span></h3>
+                        </div>
+                        <p class="text-sm text-zinc-500 mt-0.5">成都傲梅科技</p>
+                    </div>
+                    <span class="text-xs font-mono text-pink-theme bg-pink-light border border-pink-theme/10 px-3 py-1 rounded-full mt-2 md:mt-0 self-start md:self-auto shrink-0 transition-all duration-300 group-hover/career:border-pink-theme/40 group-hover/career:shadow-[0_0_10px_rgba(252,111,167,0.3)]">
+                        2022.07 - 2024.07
+                    </span>
+                </div>
+
+                <div class="bg-zinc-50 border border-zinc-100 p-6 rounded-xl shadow-2xs space-y-5">
+                    <div>
+                        <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-tie text-[10px]"></i> Role
+                        </h4>
+                        <p class="text-sm text-zinc-700 leading-relaxed">
+                            负责 AnyViewer 德语市场内容运营与海外增长，通过本地化内容、SEO 提升品牌曝光。
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-bullseye text-[10px]"></i> Focus Areas
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg">
+                                <p class="text-xs font-semibold text-zinc-850 mb-1">Content Localization</p>
+                                <p class="text-xs text-zinc-500 leading-relaxed">负责德语市场官网内容本地化，优化产品表达和用户沟通。</p>
+                            </div>
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg">
+                                <p class="text-xs font-semibold text-zinc-850 mb-1">SEO Growth</p>
+                                <p class="text-xs text-zinc-500 leading-relaxed">围绕用户搜索需求进行关键词研究、内容策划和流量优化。</p>
+                            </div>
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg">
+                                <p class="text-xs font-semibold text-zinc-850 mb-1">International Marketing</p>
+                                <p class="text-xs text-zinc-500 leading-relaxed">参与海外 KOL / Media Outreach，拓展品牌曝光渠道。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-zinc-100 flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-semibold text-zinc-400">Skills Developed:</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">海外内容运营</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">SEO策略</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">用户洞察</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">数据分析</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02 自媒体运营 -->
+            <div class="relative group/career">
+                <div class="career-dot-hover absolute -left-[41px] md:-left-[57px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-pink-theme flex items-center justify-center">
+                    <div class="w-1.5 h-1.5 bg-pink-theme rounded-full"></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="career-title-hover text-lg md:text-xl font-semibold text-zinc-900 tracking-wide cursor-pointer inline-block">自媒体运营 <span class="text-xs font-normal text-zinc-500 font-mono">Independent Social Media Creator</span></h3>
+                        </div>
+                        <p class="text-sm text-zinc-500 mt-0.5">视觉设计 & AI 内容方向</p>
+                    </div>
+                    <span class="text-xs font-mono text-pink-theme bg-pink-light border border-pink-theme/10 px-3 py-1 rounded-full mt-2 md:mt-0 self-start md:self-auto shrink-0 transition-all duration-300 group-hover/career:border-pink-theme/40 group-hover/career:shadow-[0_0_10px_rgba(252,111,167,0.3)]">
+                        2024.08 - 2026.07
+                    </span>
+                </div>
+
+                <div class="bg-zinc-50 border border-zinc-100 p-6 rounded-xl shadow-2xs space-y-5">
+                    <div>
+                        <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-tie text-[10px]"></i> Role
+                        </h4>
+                        <p class="text-sm text-zinc-700 leading-relaxed">
+                            独立运营视觉设计类内容账号，探索设计工具、AI创作和视觉内容传播。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-compass text-[10px]"></i> Content Direction
+                            </h4>
+                            <div class="space-y-1.5">
+                                <div class="bg-white border border-zinc-150 px-3 py-2 rounded-lg text-xs text-zinc-700 flex items-center gap-2">
+                                    <i class="fa-solid fa-pen-nib text-pink-theme text-[10px]"></i>
+                                    <span><strong>Design Tutorial</strong>｜设计教程</span>
+                                </div>
+                                <div class="bg-white border border-zinc-150 px-3 py-2 rounded-lg text-xs text-zinc-700 flex items-center gap-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-pink-theme text-[10px]"></i>
+                                    <span><strong>AI Creative Tools</strong>｜AI创意工具</span>
+                                </div>
+                                <div class="bg-white border border-zinc-150 px-3 py-2 rounded-lg text-xs text-zinc-700 flex items-center gap-2">
+                                    <i class="fa-solid fa-lightbulb text-pink-theme text-[10px]"></i>
+                                    <span><strong>Visual Inspiration</strong>｜视觉设计灵感</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-trophy text-[10px]"></i> Growth Achievement
+                            </h4>
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg space-y-2 text-xs text-zinc-700">
+                                <p class="flex items-center gap-1.5 text-zinc-900 font-semibold">
+                                    <i class="fa-solid fa-heart text-pink-theme text-[10px]"></i> 累计获赞收藏 <span class="text-pink-theme font-bold">11万+</span>
+                                </p>
+                                <p class="flex items-center gap-1.5 text-zinc-700">
+                                    <i class="fa-solid fa-fire text-pink-theme text-[10px]"></i> 多篇内容达到万赞级互动
+                                </p>
+                                <p class="text-zinc-600 leading-relaxed border-t border-zinc-100 pt-2 mt-1">
+                                    与剪映、即梦、Lovart 等 AI 工具品牌开展商业合作。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-zinc-100 flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-semibold text-zinc-400">Skills Developed:</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">内容策划</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">短视频制作</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">爆款拆解</span>
+                        <span class="px-2.5 py-1 bg-white border border-pink-theme/20 text-xs text-zinc-700 rounded-md">AI内容营销</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 内容运营 -->
+            <div class="relative group/career">
+                <div class="career-dot-hover absolute -left-[41px] md:-left-[57px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-pink-theme flex items-center justify-center">
+                    <div class="w-1.5 h-1.5 bg-pink-theme rounded-full"></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="career-title-hover text-lg md:text-xl font-semibold text-zinc-900 tracking-wide cursor-pointer inline-block">内容运营 <span class="text-xs font-normal text-zinc-500 font-mono">Brand Content Operator</span></h3>
+                        </div>
+                        <p class="text-sm text-zinc-500 mt-0.5">晓欧设计事务所</p>
+                    </div>
+                    <span class="text-xs font-mono text-pink-theme bg-pink-light border border-pink-theme/10 px-3 py-1 rounded-full mt-2 md:mt-0 self-start md:self-auto shrink-0 transition-all duration-300 group-hover/career:border-pink-theme/40 group-hover/career:shadow-[0_0_10px_rgba(252,111,167,0.3)]">
+                        2025.07 - 2026.03
+                    </span>
+                </div>
+
+                <div class="bg-zinc-50 border border-zinc-100 p-6 rounded-xl shadow-2xs space-y-5">
+                    <div>
+                        <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-tie text-[10px]"></i> Role
+                        </h4>
+                        <p class="text-sm text-zinc-700 leading-relaxed">
+                            负责室内设计品牌社媒内容运营，通过内容策略建立品牌专业形象，并支持潜在客户转化。
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-bullseye text-[10px]"></i> Focus Areas
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg">
+                                <p class="text-xs font-semibold text-zinc-850 mb-1">Brand Content</p>
+                                <p class="text-xs text-zinc-500 leading-relaxed">设计项目解析、案例传播、公众号深度内容。</p>
+                            </div>
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg">
+                                <p class="text-xs font-semibold text-zinc-850 mb-1">Social Media Growth</p>
+                                <p class="text-xs text-zinc-500 leading-relaxed">小红书内容矩阵规划、关键词优化、投流测试。</p>
+                            </div>
+                            <div class="bg-white border border-zinc-150 p-3.5 rounded-lg">
+                                <p class="text-xs font-semibold text-zinc-850 mb-1">Visual Communication</p>
+                                <p class="text-xs text-zinc-500 leading-relaxed">制作动态视觉内容、空间解析图，提高设计内容传播效率。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-zinc-100">
+                        <h4 class="text-xs font-bold text-pink-theme uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-line text-[10px]"></i> Achievement
+                        </h4>
+                        <div class="flex flex-wrap gap-3">
+                            <div class="bg-white border border-zinc-150 px-3.5 py-2 rounded-lg text-xs text-zinc-800 flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-trend-up text-pink-theme text-[10px]"></i>
+                                <span>账号粉丝增长 <strong class="text-pink-theme font-bold">2000+</strong></span>
+                            </div>
+                            <div class="bg-white border border-zinc-150 px-3.5 py-2 rounded-lg text-xs text-zinc-800 flex items-center gap-2">
+                                <i class="fa-solid fa-check-circle text-pink-theme text-[10px]"></i>
+                                <span>完成设计案例内容体系搭建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 第三板块：Portfolio (项目展示) - 极简风琴挤压卡片画廊 -->
+    <section id="portfolio" class="relative py-28 md:py-36 px-6 md:px-12 max-w-7xl mx-auto border-t border-zinc-100 bg-white">
+        <div class="relative mb-16 select-none">
+            <img src="https://img.cdn1.vip/i/6a5a0932f2e5e_1784285490.webp" class="absolute -left-12 md:-left-20 -top-8 md:-top-12 w-[330px] md:w-[570px] max-w-none h-auto object-contain pointer-events-none z-0 opacity-90" alt="Title Ornament">
+            
+            <div class="relative z-10">
+                <span class="text-pink-theme text-xs font-bold tracking-widest uppercase">03 / Works</span>
+                <h2 class="text-3xl md:text-4xl font-extralight tracking-widest text-zinc-900 mt-2">PORTFOLIO <span class="text-zinc-400 font-light text-base block md:inline md:ml-2">项目展示</span></h2>
+            </div>
+        </div>
+
+        <!-- 风琴布局总容器 -->
+        <div class="portfolio-container flex flex-col md:flex-row w-full gap-8 md:gap-4 justify-between items-stretch overflow-visible">
+            
+            <!-- 文件夹 1：公众号项目 (3 篇图文案例) -->
+            <div class="portfolio-item group relative flex flex-col cursor-pointer overflow-visible" id="wechat-project-item" data-title="公众号/品牌运营案例">
+                <div class="relative w-full aspect-[4/3] select-none overflow-visible">
+                    <img src="https://img.cdn1.vip/i/6a5a06e24a7ad_1784284898.webp" 
+                         alt="公众号默认" 
+                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
+                    <img src="https://img.cdn1.vip/i/6a5a06df79a1e_1784284895.webp" 
+                         alt="公众号悬停" 
+                         class="absolute inset-0 w-full h-full object-contain opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" />
+                </div>
+                <div class="mt-4 text-center transition-all duration-500 group-hover:translate-y-1">
+                    <h3 class="text-sm font-medium tracking-widest text-zinc-800 transition-colors duration-300 group-hover:text-pink-theme uppercase flex items-center justify-center gap-1.5">
+                        公众号项目 <span class="text-[10px] bg-pink-light text-pink-theme px-1.5 py-0.5 rounded-full border border-pink-theme/20 font-normal">3篇图文案例</span>
+                    </h3>
+                    <p class="text-[10px] text-zinc-400 mt-1 font-mono">WeChat Official Account</p>
+                </div>
+            </div>
+
+            <!-- 文件夹 2：小红书笔记 (4 篇图文案例) -->
+            <div class="portfolio-item group relative flex flex-col cursor-pointer overflow-visible" id="xhs-notes-item" data-title="小红书爆款笔记分析">
+                <div class="relative w-full aspect-[4/3] select-none overflow-visible">
+                    <img src="https://img.cdn1.vip/i/6a5a06e528abb_1784284901.webp" 
+                         alt="小红书笔记默认" 
+                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
+                    <img src="https://img.cdn1.vip/i/6a5a06dfbed5a_1784284895.webp" 
+                         alt="小红书笔记悬停" 
+                         class="absolute inset-0 w-full h-full object-contain opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" />
+                </div>
+                <div class="mt-4 text-center transition-all duration-500 group-hover:translate-y-1">
+                    <h3 class="text-sm font-medium tracking-widest text-zinc-800 transition-colors duration-300 group-hover:text-pink-theme uppercase flex items-center justify-center gap-1.5">
+                        小红书笔记 <span class="text-[10px] bg-pink-light text-pink-theme px-1.5 py-0.5 rounded-full border border-pink-theme/20 font-normal">4篇图文案例</span>
+                    </h3>
+                    <p class="text-[10px] text-zinc-400 mt-1 font-mono">Xiaohongshu Notes</p>
+                </div>
+            </div>
+
+            <!-- 文件夹 3：自媒体账号 (5 篇图文案例) -->
+            <div class="portfolio-item group relative flex flex-col cursor-pointer overflow-visible" id="media-account-item" data-title="自媒体账号矩阵运营与商业闭环">
+                <div class="relative w-full aspect-[4/3] select-none overflow-visible">
+                    <img src="https://img.cdn1.vip/i/6a5a06e60b276_1784284902.webp" 
+                         alt="自媒体账号默认" 
+                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
+                    <img src="https://img.cdn1.vip/i/6a5a06e303edc_1784284899.webp" 
+                         alt="自媒体账号悬停" 
+                         class="absolute inset-0 w-full h-full object-contain opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" />
+                </div>
+                <div class="mt-4 text-center transition-all duration-500 group-hover:translate-y-1">
+                    <h3 class="text-sm font-medium tracking-widest text-zinc-800 transition-colors duration-300 group-hover:text-pink-theme uppercase flex items-center justify-center gap-1.5">
+                        自媒体账号 <span class="text-[10px] bg-pink-light text-pink-theme px-1.5 py-0.5 rounded-full border border-pink-theme/20 font-normal">5篇图文案例</span>
+                    </h3>
+                    <p class="text-[10px] text-zinc-400 mt-1 font-mono">Creator Account Gallery</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 第四板块：Contact (联系我) -->
+    <section id="contact" class="relative py-28 md:py-36 px-6 md:px-12 max-w-7xl mx-auto border-t border-zinc-100 bg-white">
+        <div class="relative mb-16 select-none">
+            <img src="https://img.cdn1.vip/i/6a5a0932f2e5e_1784285490.webp" class="absolute -left-12 md:-left-20 -top-8 md:-top-12 w-[330px] md:w-[570px] max-w-none h-auto object-contain pointer-events-none z-0 opacity-90" alt="Title Ornament">
+            
+            <div class="relative z-10">
+                <span class="text-pink-theme text-xs font-bold tracking-widest uppercase">04 / Connect</span>
+                <h2 class="text-3xl md:text-4xl font-extralight tracking-widest text-zinc-900 mt-2">CONTACT <span class="text-zinc-400 font-light text-base block md:inline md:ml-2">联系我</span></h2>
+            </div>
+        </div>
+
+        <div class="bg-zinc-50 border border-zinc-100 rounded-2xl p-8 md:p-12 text-center max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="tel:13982958882" class="px-6 py-3 rounded-full bg-pink-theme text-white text-xs tracking-widest uppercase font-medium hover:bg-pink-theme-hover transition-colors shadow-md shadow-pink-theme/20 flex items-center gap-2">
+                    <i class="fa-solid fa-phone text-xs"></i> 139-8295-8882
+                </a>
+                <a href="mailto:1015079847@qq.com" class="px-6 py-3 rounded-full bg-white border border-zinc-200 text-zinc-800 text-xs tracking-widest uppercase font-medium hover:border-pink-theme hover:text-pink-theme transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-envelope text-xs"></i> Send Email
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 统一的多板块灯箱 Modal -->
+    <div id="portfolio-modal" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-4 md:p-8 bg-black/50 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500 ease-out select-none">
+        
+        <div class="relative w-full max-w-6xl max-h-[90vh] flex flex-col items-center justify-center transform scale-95 transition-transform duration-500 ease-out my-auto" id="modal-content">
+            
+            <button id="modal-close" aria-label="Close modal" class="absolute -top-12 right-0 md:-top-14 md:right-0 w-10 h-10 md:w-11 md:h-11 rounded-full bg-white text-zinc-700 border border-zinc-200 hover:border-pink-theme hover:text-white hover:bg-pink-theme shadow-md hover:shadow-[0_0_20px_rgba(252,111,167,0.5)] flex items-center justify-center transition-all duration-300 z-30 focus:outline-none">
+                <i class="fa-solid fa-xmark text-base md:text-lg"></i>
+            </button>
+
+            <button id="modal-prev" aria-label="Previous image" class="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/95 backdrop-blur-md text-zinc-700 border border-zinc-200 hover:border-pink-theme hover:text-white hover:bg-pink-theme shadow-lg hover:shadow-[0_0_25px_rgba(252,111,167,0.6)] hover:scale-110 flex items-center justify-center transition-all duration-300 z-30 focus:outline-none opacity-0 pointer-events-none">
+                <i class="fa-solid fa-chevron-left text-sm md:text-base leading-none"></i>
+            </button>
+
+            <button id="modal-next" aria-label="Next image" class="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/95 backdrop-blur-md text-zinc-700 border border-zinc-200 hover:border-pink-theme hover:text-white hover:bg-pink-theme shadow-lg hover:shadow-[0_0_25px_rgba(252,111,167,0.6)] hover:scale-110 flex items-center justify-center transition-all duration-300 z-30 focus:outline-none opacity-0 pointer-events-none">
+                <i class="fa-solid fa-chevron-right text-sm md:text-base leading-none"></i>
+            </button>
+
+            <div id="modal-body" class="w-full flex flex-col md:flex-row items-stretch justify-center gap-6 overflow-hidden max-h-[82vh] bg-white border border-zinc-200/80 rounded-2xl p-4 md:p-6 shadow-2xl relative">
+                <div id="modal-img-container" class="w-full md:w-1/2 flex items-center justify-center bg-zinc-50 border border-zinc-100 rounded-xl p-2 md:pl-10 overflow-hidden relative min-h-[220px] md:min-h-[420px]">
+                    <img id="modal-img" src="" alt="项目详情" class="max-w-full max-h-[60vh] md:max-h-[70vh] object-contain rounded-lg transition-opacity duration-300" />
+                </div>
+                
+                <div id="modal-text-container" class="w-full md:w-1/2 flex flex-col justify-start overflow-y-auto pr-12 md:pr-14 pl-2 text-zinc-800 text-left space-y-4 max-h-[60vh] md:max-h-[70vh] custom-scroll">
+                    <!-- 动态注入图文 -->
+                </div>
+            </div>
+
+            <div id="modal-caption-bar" class="mt-4 flex items-center justify-between gap-4 w-full max-w-xl px-6 py-2.5 rounded-full bg-white/90 border border-zinc-200/80 backdrop-blur-md text-zinc-800 shadow-md">
+                <span id="modal-title" class="text-xs md:text-sm font-medium tracking-wider truncate text-zinc-800"></span>
+                <span id="modal-page-counter" class="text-xs md:text-sm font-mono text-pink-theme font-bold shrink-0 bg-pink-light px-3 py-1 rounded-full border border-pink-theme/30">1 / 1</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 公众号项目 (3 篇图文案例，使用左图右文结构)
+        const wechatArticles = [
+            {
+                img: "https://img.cdn1.vip/i/6a60996a1ea17_1784715626.gif",
+                title: "Project Overview 项目背景",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">01 / Project Overview</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">Project Overview 项目背景</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Responsibilities & Content Goals</p>
+                        </div>
+                        
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600 leading-relaxed">
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1.5">
+                                <p class="text-zinc-700">负责室内设计工作室微信公众号内容运营，通过设计案例深度解析，提高品牌行业影响力。</p>
+                            </div>
+
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1.5">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bullseye text-[10px]"></i> Content Goal 目标
+                                </h4>
+                                <ul class="space-y-1.5 text-zinc-700 text-xs">
+                                    <li class="flex items-start gap-1.5">
+                                        <i class="fa-solid fa-check text-pink-theme text-[10px] mt-1"></i>
+                                        <span><strong class="text-zinc-800">品牌建设：</strong>展示设计理念和专业能力，提高品牌信任度。</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5">
+                                        <i class="fa-solid fa-check text-pink-theme text-[10px] mt-1"></i>
+                                        <span><strong class="text-zinc-800">行业传播：</strong>通过专业内容触达设计行业用户。</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5">
+                                        <i class="fa-solid fa-check text-pink-theme text-[10px] mt-1"></i>
+                                        <span><strong class="text-zinc-800">客户认知：</strong>帮助潜在客户理解设计价值，而非单纯展示效果图。</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-2">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-gear text-[10px]"></i> 我的职责
+                                </h4>
+                                <div class="flex flex-wrap gap-1.5 text-xs">
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">选题策划</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">内容结构设计</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">文案撰写</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">信息整理</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">动图制作</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">视觉排版</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a60996614724_1784715622.gif",
+                title: "文章内容拆解 Content Structure",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">02 / Content Structure</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">文章内容拆解 Content Structure</h3>
+                            <p class="text-xs text-zinc-400 font-mono">4-Step Narrative Logic</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <div class="grid grid-cols-1 gap-2.5">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center">1</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Project Background</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">不直接展示设计结果，而是品牌引入（包含：项目所在地、地理环境、建筑背景），建立故事线。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center">2</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Design Concept</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">深度解析：设计理念 · 空间关系 · 材料选择。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center">3</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Visual Explanation</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">通过：爆炸图 · 空间动图 · 动态拆解，降低专业内容理解门槛。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center">4</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Brand Value</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">理念传达：专业经验 · 品牌理念。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a60996675282_1784715622.gif",
+                title: "视觉内容制作 Visual Content",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">03 / Visual Content</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">视觉内容制作 Visual Content</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Dynamic Spatial Breakdown</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-4 space-y-3">
+                                <p class="text-sm text-zinc-700 leading-relaxed">
+                                    室内设计项目涉及大量空间信息，通过动态视觉方式拆解建筑关系，使用户更直观理解设计逻辑。
+                                </p>
+                                <div class="p-3 bg-pink-light/50 border border-pink-theme/20 rounded-lg text-xs text-zinc-700">
+                                    <i class="fa-solid fa-sparkles text-pink-theme mr-1.5"></i>
+                                    <strong>核心亮点：</strong>将复杂的二维平面图与三维空间构造转化为平滑流畅的动图/视觉拆解，大幅增强了公号推文的阅读沉浸感与视觉冲击力。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // 2. 小红书笔记 4 篇结构化图文案例数据
+        const xhsArticles = [
+            {
+                img: "https://img.cdn1.vip/i/6a5fc74bc981e_1784661835.gif",
+                title: "项目背景 Project Overview",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">01 / Project Overview</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">项目背景 & 职责</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Project Overview & Responsibilities</p>
+                        </div>
+                        
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600 leading-relaxed">
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1.5">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-circle-info text-[10px]"></i> 项目背景
+                                </h4>
+                                <p class="text-zinc-700">负责某室内设计工作室小红书账号运营，通过内容策划与视觉优化，提升品牌专业形象，并辅助获取潜在客户咨询。</p>
+                            </div>
+
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1.5">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bullseye text-[10px]"></i> 商业目标 Business Goal
+                                </h4>
+                                <ul class="list-disc list-inside space-y-1 text-zinc-700">
+                                    <li>提升工作室在小红书曝光度</li>
+                                    <li>建立工作室专业的品牌形象</li>
+                                    <li>通过平台搜索和内容触达潜在客户</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-2">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-gear text-[10px]"></i> 我的职责
+                                </h4>
+                                <div class="flex flex-wrap gap-1.5 text-xs">
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">内容策划</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">选题规划</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">文案撰写</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">图片/动图制作</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">账号维护</span>
+                                    <span class="px-2.5 py-1 bg-white border border-zinc-200 rounded-md font-medium text-zinc-700">数据分析</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a608a0e0956b_1784711694.gif",
+                title: "账号内容策略 Content Strategy",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">02 / Content Strategy</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">账号内容策略</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Content Matrix & Planning Logic</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-sitemap text-[10px]"></i> 内容矩阵
+                            </h4>
+
+                            <div class="space-y-2">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-semibold text-zinc-800">1. 项目预告</span>
+                                        <span class="text-[10px] bg-pink-light text-pink-theme px-2 py-0.5 rounded-full">建立期待</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500">渲染图 / 动画预览</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-semibold text-zinc-800">2. 完工案例</span>
+                                        <span class="text-[10px] bg-pink-light text-pink-theme px-2 py-0.5 rounded-full">展示设计能力</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500">摄影图 + 设计解析</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-semibold text-zinc-800">3. 获奖动态</span>
+                                        <span class="text-[10px] bg-pink-light text-pink-theme px-2 py-0.5 rounded-full">建立专业背书</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500">新闻内容</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a5fc74922414_1784661833.gif",
+                title: "内容案例拆解 Content Structure",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">03 / Case Study</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">内容案例拆解</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Content Structure & Visual Mechanics</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <div class="space-y-2.5">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center">1</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">01 Visual Hook</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">首图使用高质量空间效果吸引用户停留。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center">2</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">02 Design Story</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">通过设计理念、空间规划、材料选择体现专业能力。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a5fc7489141b_1784661832.gif",
+                title: "SEO关键词 & 搜索流量策略 Search Optimization Strategy",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">04 / SEO & Search Strategy</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">SEO关键词 & 搜索流量策略</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Search Optimization Strategy</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-building-columns text-[10px]"></i> 行业特点
+                                </h4>
+                                <p class="text-xs text-zinc-700">室内设计属于高客单价、低频消费领域，通过长尾搜索词布局实现高意向精准转化。</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // 3. 自媒体账号 5 篇结构化图文案例数据
+        const mediaArticles = [
+            {
+                img: "https://img.cdn1.vip/i/6a5f8f450525c_1784647493.gif",
+                title: "个人账号运营 Personal Account Operation",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">01 / Account Positioning</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">个人账号运营</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Personal Account Operation</p>
+                        </div>
+                        
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600 leading-relaxed">
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1.5">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bullseye text-[10px]"></i> 账号定位
+                                </h4>
+                                <p class="font-semibold text-zinc-800">视觉设计灵感与效率工具分享账号</p>
+                                <p class="text-xs text-zinc-600">围绕设计用户需求，输出：<span class="text-pink-theme font-medium">AI创作工具应用</span> · <span class="text-pink-theme font-medium">视觉设计技巧</span> · <span class="text-pink-theme font-medium">IP/周边设计灵感</span></p>
+                            </div>
+
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-2">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-users text-[10px]"></i> 用户画像
+                                </h4>
+                                <div class="space-y-1.5 text-xs text-zinc-700">
+                                    <p><strong class="text-zinc-800">目标用户：</strong>初级设计师、设计专业学生、视觉内容创作者、AI工具尝试者</p>
+                                    <p><strong class="text-zinc-800">用户需求：</strong>获取视觉灵感、学习设计技巧、提升创作效率</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-1.5">
+                                <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-compass text-[10px]"></i> 内容策略
+                                </h4>
+                                <p class="text-xs text-zinc-600 leading-relaxed">
+                                    根据小红书用户“<strong class="text-zinc-800">搜索 + 收藏</strong>”的内容消费特点，优先制作具有长期使用价值的教程型和工具型内容，提高内容生命周期。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a5f9d4e6188c_1784651086.gif",
+                title: "内容矩阵 & 爆款成果展示 Content Performance Overview",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">02 / Performance Overview</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">内容矩阵 & 爆款成果展示</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Content Performance Overview</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-chart-line text-[10px]"></i> 内容表现分析
+                            </h4>
+
+                            <div class="space-y-2.5">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">强需求关键词匹配</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">通过 <span class="px-1.5 py-0.5 bg-white border border-zinc-200 rounded text-pink-theme font-mono">“AIGC教程”</span> <span class="px-1.5 py-0.5 bg-white border border-zinc-200 rounded text-pink-theme font-mono">“AI工具”</span> <span class="px-1.5 py-0.5 bg-white border border-zinc-200 rounded text-pink-theme font-mono">“灵感设计”</span> 等关键词精准匹配用户搜索需求。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">收藏驱动的高价值内容</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">工具教程和资源合集具备长期使用价值，用户收藏行为明显高于单纯展示型内容。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">视觉结果优先策略</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">利用优秀视觉效果作为第一吸引点，大幅提升用户点击率和停留时长。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a5f9dfa9cb8f_1784651258.gif",
+                title: "爆款笔记拆解①（图文案例） Case Study 01",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">03 / Case Study 01</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">爆款笔记拆解①（图文案例）</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Case Study 01</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-layer-group text-[10px]"></i> Content Structure
+                            </h4>
+
+                            <div class="space-y-2.5">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded bg-pink-light text-pink-theme text-[10px] font-bold uppercase">Hook</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">PS教程 + 效果关键词</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-1">通过明确工具和视觉效果关键词，极大提高搜索匹配精度。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded bg-pink-light text-pink-theme text-[10px] font-bold uppercase">Value Delivery</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">干货价值输出</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-1">通过 <strong class="text-zinc-800">步骤拆解 · 图层参数 · 制作过程</strong> 降低门槛，帮助用户快速复现效果。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded bg-pink-light text-pink-theme text-[10px] font-bold uppercase">Save Motivation</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">收藏动机预设</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-1">教程类内容具备长尾参考价值，精准激发用户“收藏备用”心态。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a5f9e365c4c6_1784651318.gif",
+                title: "爆款笔记拆解②（AI视频案例） Case Study 02",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">04 / Case Study 02</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">爆款笔记拆解②（AI视频案例）</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Case Study 02</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-clapperboard text-[10px]"></i> Video Flow
+                            </h4>
+
+                            <div class="grid grid-cols-1 gap-2.5">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
+                                            <h5 class="text-xs font-semibold text-zinc-800">Hook (0-3s)</h5>
+                                        </div>
+                                        <span class="text-[10px] bg-pink-light text-pink-theme px-2 py-0.5 rounded-full font-mono">黄金3秒</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">直接展示 AI 生成结果。目的：快速制造视觉冲击，提高停留时间。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Problem 提出痛点</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">提出用户真实需求场景：“如何一站式实现这样的 xxx 效果？”</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Solution 解决方案</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">清晰演示 AI 工具核心操作流程与全套参数。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-pink-theme/10 text-pink-theme text-[10px] font-bold flex items-center justify-center shrink-0">4</span>
+                                        <h5 class="text-xs font-semibold text-zinc-800">Result 效果呈现</h5>
+                                    </div>
+                                    <p class="text-xs text-zinc-600 pl-7">呈现高质量最终视觉成品，形成完美闭环。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                img: "https://img.cdn1.vip/i/6a5f9e4fc2f9e_1784651343.gif",
+                title: "运营复盘 & 方法论 Content Evolution & Strategy Optimization",
+                html: `
+                    <div class="space-y-4 text-zinc-800">
+                        <div>
+                            <span class="inline-block text-[11px] font-semibold text-pink-theme bg-pink-light border border-pink-theme/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">05 / Strategy Optimization</span>
+                            <h3 class="text-lg md:text-xl font-semibold text-zinc-900 tracking-wide">运营复盘 & 方法论</h3>
+                            <p class="text-xs text-zinc-400 font-mono">Content Evolution & Strategy Optimization</p>
+                        </div>
+
+                        <div class="space-y-3 text-xs md:text-sm text-zinc-600">
+                            <h4 class="text-xs font-bold text-pink-theme tracking-wider uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-arrows-rotate text-[10px]"></i> 内容迭代过程
+                            </h4>
+
+                            <div class="space-y-2.5">
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1.5">
+                                    <span class="inline-block text-[10px] font-bold px-2 py-0.5 bg-pink-light text-pink-theme rounded border border-pink-theme/20">Stage 01 ｜ Search-driven Tutorial Content</span>
+                                    <p class="text-xs text-zinc-700"><strong class="text-zinc-800">内容：</strong>图文工具教程</p>
+                                    <p class="text-xs text-zinc-600"><strong class="text-zinc-800">特点：</strong>关键词明确，具备搜索流量入口；教程步骤完整，用户收藏意愿较高；内容生命周期较长。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3 space-y-1.5">
+                                    <span class="inline-block text-[10px] font-bold px-2 py-0.5 bg-pink-light text-pink-theme rounded border border-pink-theme/20">Stage 02 ｜ Platform Trend Adaptation</span>
+                                    <p class="text-xs text-zinc-700"><strong class="text-zinc-800">观察与洞察：</strong>短视频获得更多推荐机会，AI大模型爆发起量。</p>
+                                    <p class="text-xs text-zinc-600"><strong class="text-zinc-800">调整：</strong>统一标题格式、视频化讲解；增加 AI 工具测试与效果展示型内容。</p>
+                                </div>
+
+                                <div class="bg-zinc-50 border border-zinc-100 rounded-xl p-3.5 space-y-2">
+                                    <span class="inline-block text-[10px] font-bold px-2 py-0.5 bg-pink-theme text-white rounded shadow-2xs">Current Strategy ｜ 场景化解决方案</span>
+                                    <p class="text-xs text-zinc-600 leading-relaxed">
+                                        从“工具教程”逐渐转向“场景化解决方案”，以短视频为主提升传播效率与推荐流量。
+                                    </p>
+                                    <div class="grid grid-cols-2 gap-1.5 pt-1 text-[11px]">
+                                        <div class="p-2 bg-white rounded border border-zinc-200">
+                                            <span class="font-bold text-pink-theme">Hook：</span>快速展示效果，吸引停留
+                                        </div>
+                                        <div class="p-2 bg-white rounded border border-zinc-200">
+                                            <span class="font-bold text-pink-theme">Problem：</span>提出设计需求或痛点
+                                        </div>
+                                        <div class="p-2 bg-white rounded border border-zinc-200">
+                                            <span class="font-bold text-pink-theme">Process：</span>演示工具操作流程
+                                        </div>
+                                        <div class="p-2 bg-white rounded border border-zinc-200">
+                                            <span class="font-bold text-pink-theme">Result：</span>呈现最终视觉效果
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // DOM 交互节点获取
+        const landingContainer = document.getElementById('landing-container');
+        const clickHint = document.getElementById('click-hint');
+        const navContainer = document.getElementById('nav-container');
+        const stickyHeader = document.getElementById('sticky-header');
+        const cursor = document.getElementById('custom-cursor');
+
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const mediaAccountItem = document.getElementById('media-account-item');
+        const wechatProjectItem = document.getElementById('wechat-project-item');
+        const xhsNotesItem = document.getElementById('xhs-notes-item');
+        const portfolioModal = document.getElementById('portfolio-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalImg = document.getElementById('modal-img');
+        const modalImgContainer = document.getElementById('modal-img-container');
+        const modalTextContainer = document.getElementById('modal-text-container');
+        const modalClose = document.getElementById('modal-close');
+        const modalPrev = document.getElementById('modal-prev');
+        const modalNext = document.getElementById('modal-next');
+        const modalTitle = document.getElementById('modal-title');
+        const modalPageCounter = document.getElementById('modal-page-counter');
+
+        let currentGallery = [];
+        let currentRichArticles = []; 
+        let currentImageIndex = 0;
+
+        // 刷新弹窗视图
+        const updateModalImage = (index) => {
+            const hasArticles = currentRichArticles && currentRichArticles.length > 0;
+            const total = hasArticles ? currentRichArticles.length : (currentGallery ? currentGallery.length : 0);
+            
+            if (total === 0) return;
+            
+            currentImageIndex = (index + total) % total;
+            
+            modalImg.style.opacity = '0.3';
+            if (modalTextContainer) modalTextContainer.style.opacity = '0.3';
+
+            setTimeout(() => {
+                if (hasArticles) {
+                    const article = currentRichArticles[currentImageIndex];
+                    modalImg.setAttribute('src', article.img);
+                    if (modalTextContainer) {
+                        modalTextContainer.innerHTML = article.html;
+                        modalTextContainer.classList.remove('hidden');
+                        modalTextContainer.style.opacity = '1';
+                    }
+                    if (modalImgContainer) {
+                        modalImgContainer.className = "w-full md:w-1/2 flex items-center justify-center bg-zinc-50 border border-zinc-100 rounded-xl p-2 md:pl-10 overflow-hidden relative min-h-[220px] md:min-h-[420px]";
+                    }
+                    if (modalTitle) modalTitle.textContent = article.title;
+                } else {
+                    modalImg.setAttribute('src', currentGallery[currentImageIndex]);
+                    if (modalTextContainer) {
+                        modalTextContainer.innerHTML = '';
+                        modalTextContainer.classList.add('hidden');
+                    }
+                    if (modalImgContainer) {
+                        modalImgContainer.className = "w-full flex items-center justify-center bg-zinc-50 border border-zinc-100 rounded-xl p-2 px-12 md:px-16 overflow-hidden relative min-h-[250px] md:min-h-[480px]";
+                    }
+                }
+                modalImg.style.opacity = '1';
+            }, 150);
+
+            if (modalPageCounter) {
+                modalPageCounter.textContent = `${currentImageIndex + 1} / ${total}`;
+            }
+
+            if (total > 1) {
+                modalPrev.classList.remove('opacity-0', 'pointer-events-none');
+                modalPrev.classList.add('opacity-100');
+                modalNext.classList.remove('opacity-0', 'pointer-events-none');
+                modalNext.classList.add('opacity-100');
+            } else {
+                modalPrev.classList.add('opacity-0', 'pointer-events-none');
+                modalPrev.classList.remove('opacity-100');
+                modalNext.classList.add('opacity-0', 'pointer-events-none');
+                modalNext.classList.remove('opacity-100');
+            }
+        };
+
+        // 绑定公众号项目点击 (3篇图文案例)
+        if (wechatProjectItem) {
+            wechatProjectItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentRichArticles = wechatArticles;
+                currentGallery = [];
+                currentImageIndex = 0;
+
+                updateModalImage(currentImageIndex);
+                
+                portfolioModal.classList.remove('opacity-0', 'pointer-events-none');
+                portfolioModal.classList.add('opacity-100');
+                if (modalContent) {
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // 绑定小红书笔记卡片点击 (4篇图文案例)
+        if (xhsNotesItem) {
+            xhsNotesItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentRichArticles = xhsArticles;
+                currentGallery = [];
+                currentImageIndex = 0;
+
+                updateModalImage(currentImageIndex);
+                
+                portfolioModal.classList.remove('opacity-0', 'pointer-events-none');
+                portfolioModal.classList.add('opacity-100');
+                if (modalContent) {
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // 绑定自媒体账号卡片点击 (5篇图文案例)
+        if (mediaAccountItem) {
+            mediaAccountItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentRichArticles = mediaArticles;
+                currentGallery = [];
+                currentImageIndex = 0;
+
+                updateModalImage(currentImageIndex);
+                
+                portfolioModal.classList.remove('opacity-0', 'pointer-events-none');
+                portfolioModal.classList.add('opacity-100');
+                if (modalContent) {
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // 关闭弹窗
+        const closeModal = () => {
+            portfolioModal.classList.add('opacity-0', 'pointer-events-none');
+            portfolioModal.classList.remove('opacity-100');
+            if (modalContent) {
+                modalContent.classList.add('scale-95');
+                modalContent.classList.remove('scale-100');
+            }
+            document.body.style.overflow = '';
+        };
+
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+        if (portfolioModal) {
+            portfolioModal.addEventListener('click', (e) => {
+                if (e.target === portfolioModal) closeModal();
+            });
+        }
+
+        if (modalPrev) {
+            modalPrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateModalImage(currentImageIndex - 1);
+            });
+        }
+
+        if (modalNext) {
+            modalNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateModalImage(currentImageIndex + 1);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!portfolioModal || portfolioModal.classList.contains('opacity-0')) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') updateModalImage(currentImageIndex - 1);
+            if (e.key === 'ArrowRight') updateModalImage(currentImageIndex + 1);
+        });
+
+        // 首屏点击展开导航
+        if (landingContainer) {
+            landingContainer.addEventListener('click', () => {
+                landingContainer.style.opacity = '0';
+                landingContainer.style.pointerEvents = 'none';
+                if (clickHint) clickHint.style.opacity = '0';
+                
+                setTimeout(() => {
+                    landingContainer.style.display = 'none';
+                    if (clickHint) clickHint.style.display = 'none';
+                    if (navContainer) {
+                        navContainer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+                        navContainer.classList.add('opacity-100', 'translate-y-0');
+                    }
+                }, 400);
+            });
+        }
+
+        // 光标跟手动效
+        if (cursor) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+                cursor.style.opacity = '1';
+            });
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
+        }
+
+        // 滚动时提示吸顶 Header
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                stickyHeader.classList.remove('-translate-y-full');
+            } else {
+                stickyHeader.classList.add('-translate-y-full');
+            }
+        });
+    </script>
+</body>
+</html>
